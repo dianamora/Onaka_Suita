@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>OnakaSuita!</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,11 +8,12 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
 
-<header>
+<header class="container">
   <% if signed_in? %>
       Signed in as: <%= current_user.email %>
       <%= button_to 'Sign out', sign_out_path, method: :delete %>
@@ -22,7 +23,7 @@
 </header>
     
 
-  <section>
+  <section class="container">
     <div id="flash">
       <% flash.each do |key, value| %>
       <div class="flash <%= key %>"><%= value %></div>
