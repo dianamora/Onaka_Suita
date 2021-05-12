@@ -36,5 +36,6 @@ describe Recipe do
 
             recipe.errors[:name].wont_include "has already been taken"
         end
+
     end
 end
