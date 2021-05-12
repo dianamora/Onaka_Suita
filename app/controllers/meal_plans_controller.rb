@@ -3,7 +3,7 @@ before_action :require_login
 
     def index
         @current_meal_plan = current_user.meal_plans.where("start_date <= ? AND end_date >= ?", 
-            Date.today).first
+            Date.today, Date.today).first
         @meal_plans = current_user.meal_plans.order("start_date DESC")
     end
     
@@ -25,6 +25,21 @@ before_action :require_login
 
         if @meal_plan.save
             redirect_to meal_plan_path(@meal_plan), notice: "Meal plan created!"
+        else
+            @errors = @meal_plan.errors.full_messages
+            render :new
+        end
+    end
+
+    def edit
+        @meal_plan = current_user.meal_plans.find(params[:id])
+    end
+
+    def update
+        @meal_plan = current_user.meal_plans.find(params[:id])
+
+        if @meal_plan.update(meal_plan_params)
+            redirect_to meal_plan_path(@meal_plan), notice: "Meal plan updated"
         else
             @errors = @meal_plan.errors.full_messages
             render :new
