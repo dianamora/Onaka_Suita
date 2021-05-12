@@ -9,7 +9,7 @@ describe MealPlan do
             end
 
         it "requires a start date" do
-            meal_plan.errors[:_start_date].must_include "can't be blank"
+            meal_plan.errors[:start_date].must_include "can't be blank"
         end
 
         it "requires an end date" do
@@ -17,7 +17,7 @@ describe MealPlan do
         end
 
         it "requires a user" do
-            meal_plan.errors[:_user].must_include "can't be blank"
+            meal_plan.errors[:user].must_include "can't be blank"
         end
     end
 
@@ -35,6 +35,29 @@ describe MealPlan do
             meal_plan.build_meals
 
             meal_plan.meals.size.must_equal 7
+        end
+
+        it "builds valid meals" do
+            meal_plan.build_meals
+
+            meal_plan.meals.all?(&:valid?).must_equal true
+        end
+
+        describe "with more days than recipes" do
+            let(:meal_plan) { build(:meal_plan, end_date: 8.days.from_now) }
+            
+            it "builds valid meals" do
+                meal_plan.build_meals
+
+                meal_plan.meals.all?(&:valid?).must_equal true
+            end
+
+            it "reuses recipes where necessary" do
+                meal_plan.build_meals
+
+                uniq_ids = meal_plan.meals.map(&:recipe_id).uniq
+                uniq_ids.size.must_equal 7
+            end
         end
     end
 
