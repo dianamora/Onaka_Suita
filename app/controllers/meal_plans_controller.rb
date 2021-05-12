@@ -1,6 +1,11 @@
 class MealPlansController < ApplicationController
 before_action :require_login
 
+    def index
+        @current_meal_plan = current_user.meal_plans.where("start_date <= ? AND end_date >= ?", 
+            Date.today).first
+        @meal_plans = current_user.meal_plans.order("start_date DESC")
+    end
     
     def show
         @meal_plan = current_user.meal_plans.find(params[:id])
@@ -24,6 +29,12 @@ before_action :require_login
             @errors = @meal_plan.errors.full_messages
             render :new
         end
+    end
+
+    def destroy
+        @meal_plan = current_user.meal_plans.find(params[:id])
+        @meal_plan.destroy
+        redirect_to meal_plans_path, notice: "Meal plan deleted!"
     end
 
     private
