@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :recipe do
-    name { "Okonomiyaki" }
-    description { "Delicious Japanese pancake" }
+    name { Faker::Hipster.sentence }
+    description { Faker::Hipster.paragraph }
     association(:user)
   end
 end
