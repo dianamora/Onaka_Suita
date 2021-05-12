@@ -23,4 +23,4 @@ Things you may want to cover:
 
 * ...
 
-Gems Used: thoughtbot clearance, nokogiri
+Gems Used: thoughtbot clearance, nokogiri, factory bot, minitest
